@@ -6,41 +6,41 @@
 /*   By: jdavis <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/26 10:28:13 by jdavis            #+#    #+#             */
-/*   Updated: 2022/05/26 14:09:34 by jdavis           ###   ########.fr       */
+/*   Updated: 2022/05/26 17:05:58 by jdavis           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "sound.h"
 #include <fcntl.h>
 
-int ft_notes(char c)
+double ft_notes(char c)
 {
 	if (c == 'a')
-		return (1);
+		return (27.50);
 	if (c == 'b')
-		return (2);
+		return (30.87);
 	if (c == 'c')
-		return (3);
+		return (16.35);
 	if (c == 'd')
-		return (4);
+		return (18.35);
 	if (c == 'e')
-		return (5);
+		return (20.60);
 	if (c == 'f')
-		return (6);
+		return (21.83);
 	if (c == 'g')
-		return (7);
+		return (24.50);
 	if (c == 'r')
-		return (8);
+		return (0);
 	return (-1);
 }
 
 
-int main(int argc, char *argv[])
+void ft_collect_strc(int argc, char *argv[],  t_instru *tracks[])
 {
 	int fd;
 	char *line;
 	int	ret;
-	t_instru *tracks[50];
+	//t_instru *tracks[50];
 	int j = 0;
 	int i;
 	t_instru *head = NULL;
@@ -51,7 +51,7 @@ int main(int argc, char *argv[])
 	if (argc == 1)
 	{
 		ft_printf("noo arguments dumbo\n");
-		return (-1);
+		return;
 	}
 	fd = open(argv[1], O_RDONLY);
 	if (fd)
@@ -71,7 +71,7 @@ int main(int argc, char *argv[])
 				if (!tracks[j])
 				{
 					ft_printf("tracks not true\n");
-					return (-1);
+					return;
 				}
 				tracks[j]->tempo = f;
 				head = tracks[j];
@@ -120,7 +120,7 @@ int main(int argc, char *argv[])
 					if (!tracks[j]->next)
 					{
 						ft_printf("problem\n");
-						return (0);
+						return;
 					}
 					tracks[j] = tracks[j]->next;
 					++i;
@@ -131,12 +131,7 @@ int main(int argc, char *argv[])
 			}
 		}
 	}
-	while (tracks[0])
-	{
-		ft_printf("pitch = %i    flats = %i    octa = %i     duration = %f\n", tracks[0]->pitch, tracks[0]->flat_sharp, tracks[0]->octa, tracks[0]->duration);
-		tracks[0] = tracks[0]->next;
-	}
-	return (0);
+	//return (tracks);
 
 
 }
