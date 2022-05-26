@@ -6,7 +6,7 @@
 /*   By: jdavis <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/26 16:39:21 by jdavis            #+#    #+#             */
-/*   Updated: 2022/05/26 17:21:26 by jdavis           ###   ########.fr       */
+/*   Updated: 2022/05/26 19:03:25 by jdavis           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 
 void wave_sine(SDL_AudioDeviceID audio_device, t_instru *s)
 {
+	//ft_printf("pitch %lf    tempo = %i   time = %f\n", s->pitch, s->tempo, s->duration);
     // pushing 3 seconds of samples to the audio buffer:
     for (int i = 0; i < FREQ * (s->tempo / 60) * s->duration; i++)
     {

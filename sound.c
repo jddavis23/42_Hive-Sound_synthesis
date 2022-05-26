@@ -6,7 +6,7 @@
 /*   By: jdavis <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/26 10:28:13 by jdavis            #+#    #+#             */
-/*   Updated: 2022/05/26 17:05:58 by jdavis           ###   ########.fr       */
+/*   Updated: 2022/05/26 18:55:41 by jdavis           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,13 +40,14 @@ void ft_collect_strc(int argc, char *argv[],  t_instru *tracks[])
 	int fd;
 	char *line;
 	int	ret;
-	//t_instru *tracks[50];
 	int j = 0;
 	int i;
 	t_instru *head = NULL;
 	int	prev_oct;
 	float prev_dur = 0;
 	int f;
+	int k;
+	char *temp = NULL;
 
 	if (argc == 1)
 	{
@@ -65,6 +66,8 @@ void ft_collect_strc(int argc, char *argv[],  t_instru *tracks[])
 					++f;
 				f = ft_atoi(&line[f]);
 			}
+			if (ft_strstr(line, "tracks"))
+				temp = ft_strdup(ft_strchr(line, ' '));
 			if (line[0] >= '0' && line[0] <= '9')
 			{
 				tracks[j] = (t_instru *) malloc (sizeof(t_instru));
@@ -77,6 +80,15 @@ void ft_collect_strc(int argc, char *argv[],  t_instru *tracks[])
 				head = tracks[j];
 				i = 0;
 				prev_oct = 4;
+				if (temp)
+				{
+					ft_bzero(tracks[j]->waves, 9);
+					strncpy(tracks[j]->waves, temp, ft_strlen_stop(temp, ','));
+					while (*temp != ',' && *temp != '\0')
+						temp++;
+					if (*temp == ',')
+						++temp;	
+				}
 				while (line[i] != '\0')
 				{
 					tracks[j]->tempo = f;
@@ -117,6 +129,7 @@ void ft_collect_strc(int argc, char *argv[],  t_instru *tracks[])
 						break ;
 					}
 					tracks[j]->next = (t_instru *) malloc (sizeof(t_instru));
+					ft_strcpy(tracks[j]->next->waves, tracks[j]->waves);
 					if (!tracks[j]->next)
 					{
 						ft_printf("problem\n");
