@@ -14,7 +14,6 @@
 
 void wave_sine(SDL_AudioDeviceID audio_device, t_instru *s)
 {
-    //printf("%f\n", ((float)FREQ * ((float)60 / (float)s->tempo) * s->duration));
     for (int i = 0; i < (float)FREQ * ((float)60 / (float)s->tempo) * s->duration; i++)
     {
         // SDL_QueueAudio expects a signed 16-bit value
