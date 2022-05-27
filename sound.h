@@ -19,7 +19,7 @@
 # include <math.h>
 # define SAMPLE 1024
 # define FREQ 44100
-# define CHANNELS 2
+# define CHANNELS 1
 # define GAIN 5000
 
 typedef struct s_instru
