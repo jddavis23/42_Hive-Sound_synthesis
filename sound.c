@@ -6,7 +6,7 @@
 /*   By: jdavis <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/26 10:28:13 by jdavis            #+#    #+#             */
-/*   Updated: 2022/05/26 18:55:41 by jdavis           ###   ########.fr       */
+/*   Updated: 2022/05/27 19:20:43 by jdavis           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,9 +44,11 @@ void ft_collect_strc(int argc, char *argv[],  t_instru *tracks[])
 	int i;
 	t_instru *head = NULL;
 	int	prev_oct;
-	float prev_dur = 0;
+	float prev_dur = 0.5;
 	int f;
 	int k;
+	int m = 0;
+	int m_count = 0;
 	char *temp = NULL;
 
 	if (argc == 1)
@@ -67,19 +69,46 @@ void ft_collect_strc(int argc, char *argv[],  t_instru *tracks[])
 				f = ft_atoi(&line[f]);
 			}
 			if (ft_strstr(line, "tracks"))
+			{
+				while (line[m] != '\0')
+				{
+					if (line[m] == ',')
+						++m_count;
+					++m;
+				}
+				++m_count;
 				temp = ft_strdup(ft_strchr(line, ' '));
+			}
 			if (line[0] >= '0' && line[0] <= '9')
 			{
-				tracks[j] = (t_instru *) malloc (sizeof(t_instru));
+				j = ft_atoi(line) - 1;
+				if (tracks[j])
+				{
+					head = tracks[j];
+					while (tracks[j]->next)
+					{
+						prev_dur = tracks[j]->duration;
+						prev_oct = tracks[j]->octa;
+						tracks[j] = tracks[j]->next;
+					}
+					tracks[j]->next = (t_instru *) malloc (sizeof(t_instru));
+					//tracks[j] = tracks[j]->next;
+				}
+				else
+				{
+					tracks[j] = (t_instru *) malloc (sizeof(t_instru));
+					head = tracks[j];
+					prev_oct = 4;
+					prev_dur = 0.5;
+				}
 				if (!tracks[j])
 				{
 					ft_printf("tracks not true\n");
 					return;
 				}
+				tracks[j]->tracks = m;
 				tracks[j]->tempo = f;
-				head = tracks[j];
 				i = 0;
-				prev_oct = 4;
 				if (temp)
 				{
 					ft_bzero(tracks[j]->waves, 9);
@@ -91,9 +120,15 @@ void ft_collect_strc(int argc, char *argv[],  t_instru *tracks[])
 				}
 				while (line[i] != '\0')
 				{
+					tracks[j]->tracks = m_count;
 					tracks[j]->tempo = f;
-					while ((line[i] < 'a' ||  line[i] > 'g') && line[i] != 'r')
+					while ((line[i] < 'a' ||  line[i] > 'g') && line[i] != 'r' && line[i] != '\0')
 						++i;
+					if (line[i] == '\0')
+					{
+						tracks[i] = NULL;
+						break;
+					}
 					tracks[j]->pitch = ft_notes(line[i++]);
 					if (line[i] == '#' || line[i] == 'b')
 					{
@@ -144,7 +179,4 @@ void ft_collect_strc(int argc, char *argv[],  t_instru *tracks[])
 			}
 		}
 	}
-	//return (tracks);
-
-
 }
