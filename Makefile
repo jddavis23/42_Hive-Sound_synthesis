@@ -13,13 +13,16 @@
 NAME = minisynth
 SRC = main.c waves.c sound.c
 OBJS = $(SRC:.c=.o)
-CFLAGS = -I/Users/jdavis/.brew/include/SDL2 -D_THREAD_SAFE 
-LIB = -L/Users/jdavis/.brew/lib -lSDL2 -L. libft/libftprintf.a
+CFLAGS = -I/Users/acamaras/.brew/include/SDL2 -D_THREAD_SAFE 
+LIB = -L/Users/acamaras/.brew/lib -lSDL2 -L. libft/libftprintf.a
 
 
 .PHONY: all clean fclean re
 
-all: $(NAME)
+all: libftprinta $(NAME)
+
+libftprinta:
+	make -C libft/ re
 
 $(NAME): $(OBJS)
 	gcc $(CFLAGS) $(LIB) -o $@ $^
