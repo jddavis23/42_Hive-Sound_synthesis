@@ -5,7 +5,7 @@
 2. Use these commands to get the cflags and lib flags for your Makefile:
             sdl2-config --cflags
             sdl2-config --libs
-
+Or just change the intra login to your own in the CFLAGS and LIB section in the Makefile.
 3. Run make
 
 4. Run ./minisynth [filename.synth].
