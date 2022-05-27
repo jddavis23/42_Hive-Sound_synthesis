@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   waves.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jdavis <marvin@42.fr>                      +#+  +:+       +#+        */
+/*   By: acamaras <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/05/26 16:39:21 by jdavis            #+#    #+#             */
-/*   Updated: 2022/05/27 19:45:50 by acamaras         ###   ########.fr       */
+/*   Created: 2022/05/27 19:51:50 by acamaras          #+#    #+#             */
+/*   Updated: 2022/05/27 19:51:56 by acamaras         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,8 @@
 
 void wave_sine(SDL_AudioDeviceID audio_device, t_instru *s)
 {
-    for (int i = 0; i < FREQ * (s->tempo/60) * s->duration; i++)
+    printf("%i\n", s->tempo);
+    for (int i = 0; i < FREQ * (s->tempo / 60) * s->duration; i++)
     {
         // SDL_QueueAudio expects a signed 16-bit value
         int16_t sample = sin((i / (float)FREQ) * 2.0f * M_PI * s->pitch * pow(2, s->octa)) * GAIN;

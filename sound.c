@@ -34,7 +34,6 @@ double ft_notes(char c)
 	return (-1);
 }
 
-
 void ft_collect_strc(int argc, char *argv[],  t_instru *tracks[])
 {
 	int fd;
